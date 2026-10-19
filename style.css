@@ -1,0 +1,205 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #f7f5ef;
+  color: #28352e;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.site-header {
+  padding: 42px 20px;
+  text-align: center;
+  background-color: #dfe9dc;
+  border-bottom: 1px solid #c8d6c4;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #53715b;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.tagline {
+  margin: 8px 0 0;
+  color: #506054;
+}
+
+
+main {
+  width: min(760px, calc(100% - 32px));
+  margin: 32px auto;
+}
+
+.panel {
+  margin-bottom: 24px;
+  padding: 24px;
+  background-color: #ffffff;
+  border: 1px solid #e3e4dc;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgb(40 53 46 / 5%);
+}
+
+.section-heading {
+  margin-bottom: 18px;
+}
+
+.section-heading h2 {
+  margin: 0 0 4px;
+}
+
+.section-heading p {
+  margin: 0;
+  color: #68736b;
+}
+
+
+button {
+  padding: 10px 16px;
+  color: #ffffff;
+  background-color: #50765b;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  background-color: #385b42;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #94b99a;
+  outline-offset: 3px;
+}
+
+
+#status {
+  min-height: 24px;
+  margin: 16px 0;
+  font-size: 0.95rem;
+}
+
+.status-success {
+  color: #246b3b;
+  font-weight: 700;
+}
+
+.status-error {
+  color: #b42318;
+  font-weight: 700;
+}
+
+
+#notes-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.note-card {
+  padding: 16px;
+  background-color: #fbfcf9;
+  border: 1px solid #e0e7dc;
+  border-left: 4px solid #7b9b7d;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+.note-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.note-card p {
+  margin: 0;
+  color: #566158;
+  white-space: pre-wrap;
+}
+
+
+form {
+  display: grid;
+  gap: 18px;
+}
+
+.form-group {
+  display: grid;
+  gap: 7px;
+}
+
+label {
+  font-weight: 700;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 11px 12px;
+  color: #28352e;
+  background-color: #ffffff;
+  border: 1px solid #cbd3ca;
+  border-radius: 8px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.field-help {
+  margin: 0;
+  color: #68736b;
+  font-size: 0.85rem;
+}
+
+
+.site-footer {
+  padding: 20px;
+  color: #68736b;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+
+@media (max-width: 600px) {
+  .site-header {
+    padding: 30px 16px;
+  }
+
+  main {
+    margin: 20px auto;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+
+  button {
+    width: 100%;
+  }
+}
