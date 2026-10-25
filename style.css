@@ -203,3 +203,17 @@ textarea {
     width: 100%;
   }
 }
+
+.delete-btn {
+  margin-top: 14px;
+  padding: 8px 14px;
+  color: #ffffff;
+  background-color: #b4493f;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.delete-btn:hover:not(:disabled) {
+  background-color: #91352d;
+}

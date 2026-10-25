@@ -26,6 +26,18 @@ function setStatus(message, type = "") {
   }
 }
 
+function setButtonsDisabled(disabled) {
+  loadButton.disabled = disabled;
+  submitButton.disabled = disabled;
+
+  const deleteButtons = notesList.querySelectorAll(".delete-btn");
+
+  deleteButtons.forEach((button) => {
+    button.disabled = disabled;
+  });
+}
+
+
 async function request(url, options = {}) {
   const response = await fetch(url, options);
 
@@ -59,7 +71,9 @@ function renderNotes(notesToRender) {
 
   if (notesToRender.length === 0) {
     const emptyMessage = document.createElement("li");
+
     emptyMessage.textContent = "No notes found.";
+
     notesList.appendChild(emptyMessage);
     return;
   }
@@ -74,8 +88,22 @@ function renderNotes(notesToRender) {
     const body = document.createElement("p");
     body.textContent = note.body || "No body provided.";
 
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.classList.add("delete-btn");
+    deleteButton.textContent = "Delete";
+    deleteButton.setAttribute(
+      "aria-label",
+      `Delete note: ${note.title}`
+    );
+
+    deleteButton.addEventListener("click", () => {
+      deleteNote(note.id);
+    });
+
     noteItem.appendChild(title);
     noteItem.appendChild(body);
+    noteItem.appendChild(deleteButton);
 
     notesList.appendChild(noteItem);
   });
@@ -83,9 +111,7 @@ function renderNotes(notesToRender) {
 
 
 async function loadNotes() {
-  loadButton.disabled = true;
-  submitButton.disabled = true;
-
+  setButtonsDisabled(true);
   setStatus("Loading notes...");
   notesList.replaceChildren();
 
@@ -115,16 +141,13 @@ async function loadNotes() {
 
     console.error("Load notes error:", error);
   } finally {
-    loadButton.disabled = false;
-    submitButton.disabled = false;
+    setButtonsDisabled(false);
   }
 }
 
 
 async function createNote(title, body) {
-  loadButton.disabled = true;
-  submitButton.disabled = true;
-
+  setButtonsDisabled(true);
   setStatus("Creating note...");
 
   try {
@@ -142,6 +165,7 @@ async function createNote(title, body) {
 
     const createdNote = result.data;
 
+    
     notes = [createdNote, ...notes];
 
     renderNotes(notes);
@@ -161,8 +185,38 @@ async function createNote(title, body) {
 
     console.error("Create note error:", error);
   } finally {
-    loadButton.disabled = false;
-    submitButton.disabled = false;
+    setButtonsDisabled(false);
+  }
+}
+
+async function deleteNote(noteId) {
+  setButtonsDisabled(true);
+  setStatus(`Deleting note #${noteId}...`);
+
+  try {
+    const result = await request(`${API_URL}/${noteId}`, {
+      method: "DELETE"
+    });
+
+    notes = notes.filter(
+      (note) => String(note.id) !== String(noteId)
+    );
+
+    renderNotes(notes);
+
+    setStatus(
+      `Note deleted (status ${result.status}, id ${noteId}).`,
+      "success"
+    );
+  } catch (error) {
+    setStatus(
+      `Could not delete note #${noteId}. Please try again.`,
+      "error"
+    );
+
+    console.error("Delete note error:", error);
+  } finally {
+    setButtonsDisabled(false);
   }
 }
 
